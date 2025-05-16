@@ -35,24 +35,10 @@ class TrackingController extends Controller
             'recorded_by' => auth()->id(),
         ]);
 
-        $participant = Participant::findOrFail($validated['participant_id']);
-        $segment = Segment::findOrFail($validated['segment_id']);
-
-        // Calculate time in seconds
-        $startTime = optional($participant->race->start_time)->timestamp ?? now()->timestamp;
-        $recordedTime = \Carbon\Carbon::parse($validated['time_recorded_at'])->timestamp;
-        $timeInSeconds = abs($recordedTime - $startTime);
-
-        // Push to Firebase
-        $firebase = new FirebaseService();
-        $firebase->updateSegmentTime(
-            $participant->race_id,
-            $participant->id,
-            $segment->name,
-            $timeInSeconds
-        );
-
-        return response()->json(['message' => 'Segment time recorded & Firebase updated.']);
+        return response()->json([
+            'message' => 'Segment time created successfully.',
+            'data' => $segmentTime
+        ], 201);
     }
 
 }
