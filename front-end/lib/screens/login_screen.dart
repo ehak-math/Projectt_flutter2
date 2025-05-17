@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:time_tracking/providers/auth_provider.dart';
 import 'package:time_tracking/screens/manager/race_screen.dart';
 import 'tracker/race_tracker.dart';
+import 'register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -92,7 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Triathlon Login')),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -103,38 +103,116 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Form(
                   key: _formKey,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (_error != null)
                         Padding(
                           padding: const EdgeInsets.only(bottom: 10),
                           child: Text(
                             _error!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
+                      const Text(
+                        'Triathlon Login',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Email',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
                       TextFormField(
                         controller: _emailController,
-                        decoration: InputDecoration(labelText: 'Email'),
-                        validator: (value) => value == null || value.isEmpty
-                            ? 'Enter your email'
-                            : null,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color:  Color.fromARGB(255, 88, 86, 214), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color:  Color.fromARGB(255, 88, 86, 214), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color:  Color.fromARGB(255, 88, 86, 214), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Enter your email' : null,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 20),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Password',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(labelText: 'Password'),
-                        validator: (value) => value == null || value.isEmpty
-                            ? 'Enter your password'
-                            : null,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color:  Color.fromARGB(255, 88, 86, 214), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color:  Color.fromARGB(255, 88, 86, 214), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color:  Color.fromARGB(255, 88, 86, 214), width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        validator: (value) =>
+                            value == null || value.isEmpty ? 'Enter your password' : null,
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 40),
                       _loading
-                          ? CircularProgressIndicator()
+                          ? const CircularProgressIndicator()
                           : ElevatedButton(
                               onPressed: _submit,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color.fromARGB(255, 88, 86, 214),
+                                foregroundColor: Colors.white,
+                                minimumSize: const Size(double.infinity, 50),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                               child: const Text('Login'),
                             ),
+                        SizedBox(height: 10,),
+
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => const RegisterScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Don't have an account? Register here",
+                          style: TextStyle(color:  Color.fromARGB(255, 88, 86, 214)),
+                        ),
+                      ),
                     ],
                   ),
                 ),

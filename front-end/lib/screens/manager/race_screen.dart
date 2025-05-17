@@ -87,6 +87,7 @@ void showAddRaceBottomSheet(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Race"),
         centerTitle: true,
         foregroundColor: Colors.white,

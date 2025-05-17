@@ -51,4 +51,38 @@ class AuthProvider with ChangeNotifier {
     _isAuthenticated = true;
     notifyListeners();
   }
+
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String passwordConfirmation,
+    required String role,
+  }) async {
+    final response = await ApiService.post('/register', {
+      'name': name,
+      'email': email,
+      'password': password,
+      'password_confirmation': passwordConfirmation,
+      'role': role,
+    });
+
+    print('🔄 Response: $response');
+
+    if (response['token'] != null && response['user'] != null) {
+      _token = response['token'];
+      _role = response['user']['role'];
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', _token!);
+      await prefs.setString('role', _role!);
+
+      _isAuthenticated = true;
+      notifyListeners();
+    } else {
+      // Debug what caused this
+      print('❌ Invalid registration response format');
+      throw Exception(response['message'] ?? 'Registration failed');
+    }
+  }
 }
