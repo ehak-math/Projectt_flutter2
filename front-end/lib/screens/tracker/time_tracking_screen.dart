@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/auth_provider.dart';
 import '../../providers/participant_provider.dart';
 import '../../providers/sagment_provider.dart';
 import '../../providers/segment_time_provider.dart';
+import '../login_screen.dart';
 
 class TrackSegmentScreen extends StatefulWidget {
   final int raceId;
@@ -76,9 +78,23 @@ class _TrackSegmentScreenState extends State<TrackSegmentScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Track Segment Time"),
-        backgroundColor: Colors.deepPurple,
+        automaticallyImplyLeading: false,
+        title: const Text("Tracking Time"),
+        backgroundColor: Color.fromARGB(255, 88, 86, 214),
         foregroundColor: Colors.white,
+        actions: [
+           IconButton(
+            tooltip: 'Logout',
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await Provider.of<AuthProvider>(context, listen: false).logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                (route) => false,
+              );
+            },
+          ),
+        ],
       ),
       body:
           segmentProvider.isLoading || participantProvider.isLoading
